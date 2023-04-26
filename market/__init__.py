@@ -11,3 +11,4 @@ from market import routes
 
 # with app.app_context():
 #     db.create_all()
+
