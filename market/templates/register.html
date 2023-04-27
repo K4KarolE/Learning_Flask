@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+Register Page
+{% endblock %}
+
+{% block content %}
+<body class="text-center">
+    <div class="container">
+        <form method="POST" class="form-register" style="color:white">
+            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.vDldgolelOD1vZGc21PcGwAAAA%26pid%3DApi&f=1&ipt=60494f2efd0557c723619341ce1907e4bdc65642cace6217f2266c2745af1ba4&ipo=images">
+            <h1 class="h3 mb-3 font-weight-normal">
+                Please Create Your Account
+            </h1>
+            <br>
+            {{ form.username.label() }}
+            {{ form.username(class="form-control", placeholder="User Name") }}
+            
+            {{ form.email_address.label() }}
+            {{ form.email_address(class="form-control", placeholder="Email Address") }}
+
+            {{ form.password1.label() }}
+            {{ form.password1(class="form-control", placeholder="Password") }}
+
+            {{ form.password2.label() }}
+            {{ form.password2(class="form-control", placeholder="Confirm Password") }}
+
+            <br>
+            {{ form.submit(class="btn btn-lg btn-lock btn-primary")}}
+        </form>
+    </div>
+</body>
+{% endblock %}   
