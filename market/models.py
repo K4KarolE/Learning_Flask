@@ -9,7 +9,7 @@ class User(db.Model):
     items = db.relationship('Item', backref='owned_user', lazy=True)
 
     def __repr__(self):
-        return f'User: {self.username}'
+        return self.username
 
 class Item(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
