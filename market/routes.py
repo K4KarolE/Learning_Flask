@@ -2,6 +2,7 @@ from market import app
 from flask import render_template
 from flask import redirect
 from flask import url_for
+from flask import flash     # error messages
 
 from market.models import Item
 from market.models import User
@@ -32,5 +33,5 @@ def register_page():
         return redirect(url_for('market_page'))
     if form.errors != {}: # no validationn errors -> errors dictionary is empty
         for error_message in form.errors.values():
-            print(f'Error occurred: {error_message}')
-    return render_template('register.html', form=form)
+            flash(f'Error occurred: {error_message}', category='danger')
+    return render_template('register.html', form=form) 
