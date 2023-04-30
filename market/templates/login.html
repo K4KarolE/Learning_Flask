@@ -1,39 +1,33 @@
 {% extends 'base.html' %}
 {% block title %}
-Register Page
+    Login Page
 {% endblock %}
 
 {% block content %}
 <body class="text-center">
     <div class="container">
-        <form method="POST" class="form-register" style="color:white">
+        <form method="POST" class="form-signin" style="color:white">
             {{ form.hidden_tag() }}  <!-- # against Cross Site Request Forgery(CSRF) attack - steal data      -->
-            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.vDldgolelOD1vZGc21PcGwAAAA%26pid%3DApi&f=1&ipt=60494f2efd0557c723619341ce1907e4bdc65642cace6217f2266c2745af1ba4&ipo=images">
             <h1 class="h3 mb-3 font-weight-normal">
-                Please Create Your Account
+                Please Sign in
             </h1>
             <br>
             {{ form.username.label() }}
             {{ form.username(class="form-control", placeholder="User Name") }}
             
-            {{ form.email_address.label() }}
-            {{ form.email_address(class="form-control", placeholder="Email Address") }}
-
             {{ form.password1.label() }}
             {{ form.password1(class="form-control", placeholder="Password") }}
 
-            {{ form.password2.label() }}
-            {{ form.password2(class="form-control", placeholder="Confirm Password") }}
-
             <br>
             {{ form.submit(class="btn btn-lg btn-lock btn-primary")}}
-            <br>
         </form>
     </div>
     <br>
     <div class="checkbox mb-3">
-        <h6>Do have an account?</h6>
-        <a class="btn btn-sm btn-secondary" href={{ url_for('login_page') }}>Sign in</a>
+        <h6>Do not have an account?</h6>
+        <a class="btn btn-sm btn-secondary" href={{ url_for('register_page') }}>Register</a>
     </div>
+   
+
 </body>
 {% endblock %}   

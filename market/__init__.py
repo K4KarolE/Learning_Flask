@@ -1,13 +1,12 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'
-app.config['SECRET_KEY'] = '3419281c0437d4e8752a7a27'   # randomly generated >>> import os >>> os.urandom(12).hex()                
-# app.app_context().push()
+app.config['SECRET_KEY'] = '3419281c0437d4e8752a7a27'   # randomly generated >>> import os >>> os.urandom(12).hex()
 db = SQLAlchemy(app)
-# db.create_all()
-
+bcrypt = Bcrypt(app)    # OOP - getters and setters
 from market import routes
 
 # with app.app_context():
