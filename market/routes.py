@@ -3,6 +3,7 @@ from flask import render_template
 from flask import redirect
 from flask import url_for
 from flask import flash     # error messages
+from flask_login import login_user
 
 from market.models import Item
 from market.models import User
@@ -40,4 +41,13 @@ def register_page():
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()
+    if form.validate_on_submit():
+        attempted_user = User.query.filter_by(username=form.username.data).first()
+        if attempted_user and attempted_user.check_password_correction(attempted_password=form.password1.data):
+            login_user(attempted_user)
+            flash('Success! You are logged in as: {attempted_user.username}', category='success')
+            return redirect(url_for('market_page'))
+        else:
+            flash('Username and password are not matching! Please try again!', category='danger')
+
     return render_template('login.html', form=form)
