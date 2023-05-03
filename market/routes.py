@@ -4,6 +4,8 @@ from flask import redirect
 from flask import url_for
 from flask import flash     # error messages
 from flask_login import login_user
+from flask_login import logout_user
+from flask_login import login_required
 
 from market.models import Item
 from market.models import User
@@ -19,6 +21,7 @@ def home_page():
 
 
 @app.route('/market')
+@login_required     # need to loggin before reach market page init / login_manager.login_view = "login_page"
 def market_page():
     items = Item.query.all()    # info. from database.
     return render_template('market.html', items=items)
@@ -32,6 +35,8 @@ def register_page():
                               password=form.password1.data)     # models / @password.setter
         db.session.add(user_to_create)
         db.session.commit()
+        login_user(user_to_create)
+        flash(f'Account created successfully. You are logged in as: {user_to_create.username}', category='success')
         return redirect(url_for('market_page'))
     if form.errors != {}: # no validationn errors -> errors dictionary is empty
         for error_message in form.errors.values():
@@ -51,3 +56,9 @@ def login_page():
             flash('Username and password are not matching! Please try again!', category='danger')
 
     return render_template('login.html', form=form)
+
+@app.route('/logout')
+def logout_page():
+    logout_user()
+    flash("You have been logged out.", category='info')
+    return redirect(url_for("home_page"))
