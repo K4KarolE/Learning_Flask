@@ -3,7 +3,6 @@
     Market page
 {% endblock %}
 {% block content %}
-{% include 'includes/items_modals.html' %}
 <div class="row" style="margin-top:20px; margin-left:20px">
     <div class="col-8">
         <h2> Available Movies</h2>
@@ -25,14 +24,16 @@
                 {% for item in items %}     <!--Jinja for loop-->
                 {% include 'includes/items_modals.html' %}
                 <tr> <!--tr=table row-->
+                    <td>{{ item.id }}</td>
                     <td>{{ item.title }}</td>
                     <td>{{ item.year }}</td>
                     <td>{{ item.genre }}</td>
                     <td>{{ item.seen }}</td>
                     <td>
                         <!-- includes / items_modals  -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal-MoreInfo">More Info</button>
-                        <button class="btn btn-outline btn-success">Rent</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal-MoreInfo-{{ item.id }}">More Info</button>
+                       
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#Modal-Renting-{{ item.id }}">Rent</button>
                     </td>
                 </tr>
                 {% endfor %}  

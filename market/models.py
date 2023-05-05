@@ -49,7 +49,8 @@ class Item(db.Model):
     genre = db.Column(db.String(length=30), nullable=False) 
     description = db.Column(db.String(length=200), nullable=False, unique=True)
     owner = db.Column(db.Integer(), db.ForeignKey('user.id'))
+    price =  db.Column(db.Integer(), nullable=False)
 
     def __repr__(self):
-        return f'Item: {self.title}'
+        return f'Item: {self.title}, Price: {self.price}'
     

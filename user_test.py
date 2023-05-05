@@ -1,14 +1,19 @@
 from market import app
 app.app_context().push()
 from market.models import User
+from market.models import Item
 
-users = User.query.all()
+# users = User.query.all()
+# print('\n')
+# for i in users:
+#     print(i)
+# print('\n')
+
+items = Item.query.all()
 print('\n')
-for i in users:
+for i in items:
     print(i)
 print('\n')
-
-
 
 
 
