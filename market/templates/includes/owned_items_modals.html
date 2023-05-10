@@ -1,0 +1,42 @@
+  
+<style>
+.modal-content {
+    background-color: #606060
+}
+
+</style>
+
+<!-- Return Confirmation -->
+<div class="modal fade" id="Modal-Return-{{ owned_item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            {{ owned_item.title }}
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST">
+            {{ return_form.hidden_tag() }}
+          
+            <h4 class="text-center">
+              Are you sure you want to return {{ owned_item.title }}?
+            </h4>
+            <h6 class="text-center">
+              By clicking Return, you will return this item.
+            </h6>
+            <br>
+            <h6 class="text-center">
+              <input id="returned_item" name="returned_item" type="hidden" value="{{ owned_item.title }}">
+              {{ return_form.submit(class="btn btn-outline-danger btn-block") }}
+            </h6>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>

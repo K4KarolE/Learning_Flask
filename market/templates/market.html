@@ -42,8 +42,22 @@
     </div>
     <div class="col-4">
         <h2> Rented Movies</h2>
-        <p> Clikc on the item to return</p>
+        <p> Click on the item to return</p>
         <br>
+        <div class="row">
+            {% for owned_item in owned_items %}
+            {% include 'includes/owned_items_modals.html' %}
+                <div class="col=md-6">
+                    <div style="margin-bottom: 5px" class="card text-center bg-dark">
+                        <div class="card=body">
+                            <h5 class="card-title">{{ owned_item.title }}</h5>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#Modal-Return-{{ owned_item.id }}">Return this item</button>
+                            <p class="card-text"><strong>{{ owned_item.description }}</strong></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}   

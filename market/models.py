@@ -39,6 +39,9 @@ class User(db.Model, UserMixin):
     def can_purchase(self, item_obj):
         return self.budget >= item_obj.price
     
+    def can_return(self, item_obj):
+        return item_obj in self.items
+    
 
     # def __repr__(self):
     #     return self.username
@@ -62,3 +65,7 @@ class Item(db.Model):
         user.budget -= self.price
         db.session.commit()
     
+    def return_item(self, user):
+        self.owner = None
+        user.budget += self.price - 5
+        db.session.commit()

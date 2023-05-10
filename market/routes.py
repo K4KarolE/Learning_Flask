@@ -16,6 +16,7 @@ from market.models import User
 from market.forms import RegisterForm
 from market.forms import LoginForm
 from market.forms import PurchaseItemForm
+from market.forms import ReturnItemForm
 
 
 from market import db   # located in the __init__ file -> not needed: from market.__init__ import db
@@ -30,7 +31,9 @@ def home_page():
 @login_required     # need to loggin before reach market page init / login_manager.login_view = "login_page"
 def market_page():
     purchase_form = PurchaseItemForm()
+    return_form = ReturnItemForm()
     if request.method == "POST":
+        # PURCHASE ITEM
         purchased_item = request.form.get('purchased_item')     #request checking all the forms -> form attribute of request
         purchased_item_object = Item.query.filter_by(title=purchased_item).first()
         if purchased_item_object:
@@ -42,11 +45,21 @@ def market_page():
                 flash(f"You rented the {purchased_item_object.title} for {purchased_item_object.price}.", category='success')
             else:
                 flash(f'Sorry, your budget is not enough to rent {purchased_item_object.title}.', category='danger')
+        # RETURN ITEM
+        returned_item = request.form.get('returned_item')
+        returned_item_object = Item.query.filter_by(title=returned_item).first()
+        if returned_item_object:
+            if current_user.can_return(returned_item_object):
+                returned_item_object.return_item(current_user)
+                flash(f"You returned {returned_item_object.title}.", category='success')
+            else:
+                flash(f"Sorry something went wrong returning {returned_item_object.title}.", category='danger')
         return redirect(url_for('market_page'))
 
     if request.method == "GET":
         items = Item.query.filter_by(owner=None)    # owner=None -> only not rented yet
-        return render_template('market.html', items=items, purchase_form=purchase_form)
+        owned_items = Item.query.filter_by(owner=current_user.id)
+        return render_template('market.html', items=items, purchase_form=purchase_form, owned_items=owned_items, return_form=return_form)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
